@@ -1,0 +1,96 @@
+<html>
+<head>
+	<meta charset="utf-8">
+</head>
+<body>
+	<canvas width="400" height="200" id="myCanvas" style="border:1px solid #c3c3c3;">你的浏览器不支持canvas</canvas>
+    <input type="button" onclick="clearRect()" value="清空">
+    <input type="button" onclick="clickClearRect()" value="橡皮">
+    <input type="button" onclick="changeColor('red')" style="background:red"> 
+    <input type="button" onclick="changeColor('black')" style="background:black"> 
+    <input type="button" onclick="changeColor('green')" style="background:green">
+    <input type="button" onclick="changeColor('lightblue')" style="background:lightblue">
+    <input type="button" onclick="changeColor('grey')" style="background:grey">
+    <input type="button" onclick="changeColor('yellow')" style="background:yellow">
+    <input type="button" onclick="changeColor('purple')" style="background:purple">
+    
+<script type="text/javascript">
+	var myCanvas = document.getElementById("myCanvas");
+    myCanvas.addEventListener("mousedown",onMouseDown,false);
+    myCanvas.addEventListener("mousemove",onMouseMove,false);
+    myCanvas.addEventListener("mouseup",onMouseUp,false);
+
+    var ctx = myCanvas.getContext("2d");
+
+    var linerx = new Array(),
+        linery = new Array(),
+        linern = new Array();
+
+    var lastx = 0,
+        lasty = 0,
+        x = "",
+        clickColor = "black";
+
+     function onMouseDown (event) {
+        if (x == 2) {
+           x = 3;
+        }else{
+     	x = 1;
+     	linerx.push(event.layerX);
+     	linery.push(event.layerY);
+     	linern.push(0);
+      }
+     }
+
+     function onMouseMove (event) {
+     	if (x == 1) {
+     	linerx.push(event.layerX);
+     	linery.push(event.layerY);
+     	linern.push(1);	
+     	ctx.save();
+     	ctx.beginPath();
+     	ctx.lineWidth = 2;
+
+          for (var i = 0; i < linerx.length; i++) {
+          	lastx = linerx[i];
+          	lasty = linery[i];
+          	if (linern[i] == 0) {
+          		ctx.moveTo(lastx,lasty);
+          	}else{
+          		ctx.lineTo(lastx,lasty);
+          	}
+          }
+
+        ctx.strokeStyle = clickColor;
+        ctx.stroke();      
+        ctx.restore();  
+     	}else if (x == 3) {
+        var clearX = event.layerX;  
+        var clearY = event.layerY;  
+        var clearW = 10;  
+        var clearH = 10;  
+        ctx.clearRect(clearX, clearY, clearW, clearH);
+        }
+     }
+
+     function onMouseUp (event) {
+     	x = "";
+     	linerx=[];  
+        linery=[];  
+     }
+    
+    function changeColor (a) {
+    	clickColor = a;
+    }
+
+     function clearRect(){      	
+        ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);      	    
+     }  
+
+    function clickClearRect () {
+        x = 2;  
+    }
+
+</script>
+</body>
+</html>

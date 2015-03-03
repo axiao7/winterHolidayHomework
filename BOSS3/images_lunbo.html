@@ -1,0 +1,62 @@
+<html>
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+<div class="forall">
+	<div class="container">
+	   <img src="images/1.jpg">
+	   <img src="images/2.jpg">	
+	   <img src="images/3.jpg">	
+	   <img src="images/4.jpg">		
+	</div>
+</div>
+<input type="button" value="轮播向左" class="clickLeft">
+<input type="button" value="轮播向右" class="clickRight">
+<input type="button" value="点击停止" class="clickStop">
+<input type="button" value="点击开始" class="clickBegin">
+
+<script type="text/javascript" src="http://www.itxueyuan.org/uploads/javascript/jquery.js"></script>
+<script type="text/javascript">
+$(document).ready(function  () {
+	$(".forall").each(function  () {
+		var forall = this,
+		container = $(forall).children(".container")[0],
+		imageWidth = $(forall).width(),
+		imageNum = $(container).children().size(),
+		containerLength = imageWidth*imageNum,
+		activeID = 1,
+		nextID = 0,
+		setintervalID,
+		intervalTime = 4000,
+		imageSpeed = 500;
+		$(container).width(containerLength);
+        var click_left = function() {
+        	nextID = activeID<=3 ? activeID+1 : 1;
+        	$(container).animate({left:"-"+(nextID-1)*imageWidth+"px"},imageSpeed);
+        	activeID = nextID;
+        }
+        var click_right = function() {
+        	nextID = activeID<=3 ? activeID+1 : 1;
+        	$(container).animate({left:"-"+(4-nextID)*imageWidth+"px"},imageSpeed);
+        	activeID = nextID;
+        }
+        $(".clickBegin").click(function() {
+        	setintervalID = setInterval(click_left,intervalTime);
+        })
+        $(".clickStop").click(function() {
+        	clearInterval(setintervalID);
+        })
+        $(".clickLeft").click(function() {
+        	setintervalID = setInterval(click_left,intervalTime);
+        })
+        $(".clickright").click(function() {
+        	setintervalID = setInterval(click_right,intervalTime);
+        })
+
+	})
+})	
+</script>
+</body>
+</html>

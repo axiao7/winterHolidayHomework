@@ -1,0 +1,19 @@
+.forall{
+	width: 570px;
+	height: 270px;
+	position: relative;
+	overflow: hidden;
+}
+.container{
+    height: 270px;
+    position: absolute;
+    overflow: hidden;
+    top: 0px;
+    left: 0px;
+}
+.container img{
+	display: block;
+	float: left;
+	width: 570px;
+	height: 270px;
+}
